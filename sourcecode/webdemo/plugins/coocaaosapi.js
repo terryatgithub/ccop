@@ -334,9 +334,8 @@ cordova.define("com.coocaaosapi", function(require, exports, module) {
         ], success, error);
     }
 
-	//todo : 播放器回調 on_start 流程  系統播放器/ 瀏覽器播放器
     /*
-     *  启动播放器
+     *  启动系统播放器
      *  needparse: 需要传递'true'|'false'，默认传递false
      */
     CoocaaOSApi.prototype.playOnlineMovie = function(url, name, needparse, success, error) {

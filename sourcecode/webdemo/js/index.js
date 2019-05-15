@@ -277,7 +277,7 @@ var app = {
                 'com.tencent.mobileqq',
                 '123123',
                 'http://img.zcool.cn/community/01559e565d84d832f875964706920d.png',
-                function(message) { console.log(message); },
+                function(message) { console.log(JSON.string(message)); },
                 function(error) { console.log(error); });
         }, false);
 
