@@ -2,7 +2,7 @@
  * Created by Mr.jr on 2018/3/30.
  */
 
-cordova.define("coocaaosapi", function(require, exports, module) {
+cordova.define("com.coocaaosapi", function(require, exports, module) {
     console.log("hi,this is coocaaosapi-------------------------")
     var argscheck = require('cordova/argscheck'),
         channel = require('cordova/channel'),
@@ -19,7 +19,7 @@ cordova.define("coocaaosapi", function(require, exports, module) {
                 exec(completeCallback, errorCallback, "startApp", "play", (typeof message === 'string') ? [message] : message);
             }
         },
-        brocaster = require('cordova-plugin-broadcaster.broadcaster');
+        brocaster = require('com.broadcaster');
 
     channel.createSticky('onCoocaaOsInitReady');
     channel.waitForInitialization('onCoocaaOsInitReady');
@@ -802,7 +802,21 @@ cordova.define("coocaaosapi", function(require, exports, module) {
             'propertiesKey': data
         }]);
     }
-
+    /*
+	* 添加/删除全局广播。
+	*/
+	CoocaaOSApi.prototype.addGlobalBroadcastListener = function(action, listener)
+	{
+	    argscheck.checkArgs('sf','CoocaaOSApi.addGlobalBroadcastListener',arguments);
+	    brocaster.addGlobalEventListener( action,listener);
+	}
+	
+	CoocaaOSApi.prototype.removeGlobalBroadcastListener = function(action, listener)
+	{
+	    argscheck.checkArgs('sf','CoocaaOSApi.removeGlobalBroadcastListener',arguments);
+	    brocaster.removeGlobalEventListener( action, listener);
+	}
+	
     //通用监听
     CoocaaOSApi.prototype.addCommonListener = function(listener) {
         argscheck.checkArgs('f', 'CoocaaOSApi.addCommonListener', arguments);
@@ -1010,7 +1024,7 @@ cordova.define("coocaaosapi", function(require, exports, module) {
     module.exports = new CoocaaOSApi();
 });
 
-cordova.define("cordova-plugin-broadcaster.broadcaster", function(require, exports, module) {
+cordova.define("com.broadcaster", function(require, exports, module) {
     var exec = require('cordova/exec');
     var channel = require('cordova/channel');
 

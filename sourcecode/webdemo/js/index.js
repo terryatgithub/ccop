@@ -63,10 +63,6 @@ var app = {
         }
 
         console.log('Received Event: ' + id);
-        coocaaosapi.getWebViewSDKInfo(function(message) {
-            console.log("====================="+JSON.stringify(message))
-            document.getElementById('webVersion').innerHTML = "此浏览器集成的websdk版本为："+message.versionName;
-        }, function(error) { console.log(error); })
 
         //      map = new coocaakeymap($(".coocaabtn"), null, "btnFocus", function() {}, function(val) {}, function(obj) {});
         //      document.getElementById("goToDown").focus();
