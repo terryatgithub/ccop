@@ -412,7 +412,7 @@ var app = {
         });
 
         document.getElementById("startpurcharse").addEventListener("click", function() {
-            var math = Math.random() * 9000000 + 1000000;
+            var math = Math.floor(Math.random() * 9000000 + 1000000);
             coocaaosapi.purchaseOrder('1001', math + '', '包月', 'product detail', '虚拟', { 'notify_url': 'http://42.121.113.121:8090/aqiyiOrder/viewMain.html' }, 0.01, 0, '', '',
                 function(success) {console.log("purchaseOrder message " + JSON.stringify(message));},
                 function(error) { console.log(error); });
