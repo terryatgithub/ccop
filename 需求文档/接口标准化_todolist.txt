@@ -27,5 +27,18 @@ Cordova接口文档
 	教育分入口--http://beta.webapp.skysrt.com/games/webapp/springfestival/test/index.html?from=edu
 	购物分入口--http://beta.webapp.skysrt.com/games/webapp/springfestival/test/index.html?from=mall
 	应用分入口--http://beta.webapp.skysrt.com/games/webapp/springfestival/test/index.html?from=apk
-启动方式：coocaa.intent.movie.webview.no_trans
+启动方式： coocaa.intent.action.browser.no_trans
 
+
+10. IPanel接口实现基于Linux，现在JS接口基于Android
+	接口标准化文档要分不同系统，有不同版本。
+	
+11.注册按键怎么处理？
+ bindEvents: function() {
+        document.addEventListener('deviceready', this.onDeviceReady, false);
+        document.addEventListener('backbutton', this.onBackButton, false);
+        document.addEventListener('backbuttondown', this.onBackButtonDown, false);
+        document.addEventListener("homebutton", this.homeButtonFunction, false);
+        document.addEventListener('resume', this.onResume, false);
+        document.addEventListener('pause', this.onPause, false);
+    },
