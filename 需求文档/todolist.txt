@@ -8,7 +8,50 @@ Cordova接口文档
 ##樊彦博
 
 **************************************** todo ****************************************
+10. IPanel接口实现基于Linux，现在JS接口基于Android
+	接口标准化文档要分不同系统，有不同版本。
+	Android版本：
+	Linux版本：
 
+
+13. 对开发者和对Ipanel需要不同版本：
+    对开发者：提供全新接口（不能兼容之前开发的老页面）；
+	对IPanel：提供老接口，以实现卢宇翔提出的目标；
+	
+	
+
+	
+	
+	
+###待完善###：
+4.对接广告业务，也是我们内部后台，建议权限等级较高
+	==》参考wx广告接入，再封装下（隐藏内部实现）
+
+
+14.第三方web页面监测
+   ==>第三方web页面打开次数等数据统计。
+
+8.Lite版本看要不要也文档化
+	==>
+	
+
+	
+
+**************************************** done ****************************************
+1.提交日志，目前是提交我们内部大数据，建议权限等级较高，建议第三方提交友盟之类
+3.增加了监听全局广播的能力，只要页面还在无论是否被覆盖，都能监听到全局广播
+6.有个getbaseinfo的接口，里面包括的内容是总内存，剩余内存，总空间，剩余空间，这个接口命名有点问题
+7.还有启动播放以及监听播放过程的消息回调，这个得梳理下
+9. 开发完页面后，有好几种启动方式，要怎么启动这个页面，也需要说明：（比如以下）
+	比如弹窗，一定需要背景透明；
+【请用运营位的配置方式启动，避免用命令起页面（单独某个页面的测试可用，涉及到跳转的尽量避免）】
+活动主页面：
+	默认--http://beta.webapp.skysrt.com/games/webapp/springfestival/test/index.html
+        影视分入口--http://beta.webapp.skysrt.com/games/webapp/springfestival/test/index.html?from=movie
+	教育分入口--http://beta.webapp.skysrt.com/games/webapp/springfestival/test/index.html?from=edu
+	购物分入口--http://beta.webapp.skysrt.com/games/webapp/springfestival/test/index.html?from=mall
+	应用分入口--http://beta.webapp.skysrt.com/games/webapp/springfestival/test/index.html?from=apk
+启动方式： coocaa.intent.action.browser.no_trans
 11.页面生命周期(pause/resume/activated/deviceready)以及注册按键(返回键主页键等）怎么处理？
  bindEvents: function() {
         document.addEventListener('deviceready', this.onDeviceReady, false);
@@ -29,38 +72,3 @@ Cordova接口文档
 	==> ？？
 	
 
-
-13. 对开发者和对Ipanel需要不同版本：
-    对开发者：提供全新接口（不能兼容之前开发的老页面）；
-	对IPanel：提供老接口，以实现卢宇翔提出的目标；
-	
-10. IPanel接口实现基于Linux，现在JS接口基于Android
-	接口标准化文档要分不同系统，有不同版本。
-	Android版本：
-	Linux版本：
-	
-4.对接广告业务，也是我们内部后台，建议权限等级较高
-	==》参考wx广告接入，再封装下（隐藏内部实现）
-
-	
-14.第三方web页面监测
-   ==>第三方web页面打开次数等数据统计。
-
-8.Lite版本看要不要也文档化
-	==>
-	
-**************************************** done ****************************************
-1.提交日志，目前是提交我们内部大数据，建议权限等级较高，建议第三方提交友盟之类
-3.增加了监听全局广播的能力，只要页面还在无论是否被覆盖，都能监听到全局广播
-6.有个getbaseinfo的接口，里面包括的内容是总内存，剩余内存，总空间，剩余空间，这个接口命名有点问题
-7.还有启动播放以及监听播放过程的消息回调，这个得梳理下
-9. 开发完页面后，有好几种启动方式，要怎么启动这个页面，也需要说明：（比如以下）
-	比如弹窗，一定需要背景透明；
-【请用运营位的配置方式启动，避免用命令起页面（单独某个页面的测试可用，涉及到跳转的尽量避免）】
-活动主页面：
-	默认--http://beta.webapp.skysrt.com/games/webapp/springfestival/test/index.html
-        影视分入口--http://beta.webapp.skysrt.com/games/webapp/springfestival/test/index.html?from=movie
-	教育分入口--http://beta.webapp.skysrt.com/games/webapp/springfestival/test/index.html?from=edu
-	购物分入口--http://beta.webapp.skysrt.com/games/webapp/springfestival/test/index.html?from=mall
-	应用分入口--http://beta.webapp.skysrt.com/games/webapp/springfestival/test/index.html?from=apk
-启动方式： coocaa.intent.action.browser.no_trans
