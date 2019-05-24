@@ -17,7 +17,10 @@ cordova.define("com.coocaaosapi", function(require, exports, module) {
             },
             play: function(message, completeCallback, errorCallback) {
                 exec(completeCallback, errorCallback, "startApp", "play", (typeof message === 'string') ? [message] : message);
-            }
+            },
+            startservice: function(message, completeCallback, errorCallback) {
+				exec(completeCallback, errorCallback, "startApp", "startservice", (typeof message === 'string') ? [message] : message);
+			}
         },
         brocaster = require('com.broadcaster');
 
@@ -56,6 +59,7 @@ cordova.define("com.coocaaosapi", function(require, exports, module) {
             console.log("影视应用版本：" + JSON.stringify(message));
             cAppVersion = message.versionCode
         }, function(message) {});
+        
         var thiz = this;
         channel.onCordovaReady.subscribe(function() {
             console.log("------------>CoocaaOSApi() channel.onCordovaReady.subscribe");
@@ -80,6 +84,32 @@ cordova.define("com.coocaaosapi", function(require, exports, module) {
     }
 
     /*************************************内置应用相关*************************************************/
+    /*
+	* 添加/删除全局广播。
+	*/
+	CoocaaOSApi.prototype.addGlobalBroadcastListener = function(action, listener)
+	{
+	    argscheck.checkArgs('sf','CoocaaOSApi.addGlobalBroadcastListener',arguments);
+	    brocaster.addGlobalEventListener( action,listener);
+	}
+	
+	CoocaaOSApi.prototype.removeGlobalBroadcastListener = function(action, listener)
+	{
+	    argscheck.checkArgs('sf','CoocaaOSApi.removeGlobalBroadcastListener',arguments);
+	    brocaster.removeGlobalEventListener( action, listener);
+	}
+
+    /*
+     * 启动安卓小程序
+     */
+    CoocaaOSApi.prototype.startAppX2 = function(uri, preload, success, error) {
+        argscheck.checkArgs('ssff', 'CoocaaOSApi.startAppX', arguments);
+        if (preload == "true") {
+            startapp.startservice(["appx.intent.service.launcher.Start", "com.coocaa.app_browser",[uri, {'pre_load': true}]], success, error);}
+        else {
+            startapp.startservice(["appx.intent.service.launcher.Start", "com.coocaa.app_browser",[uri, {'pre_load': false}]], success, error);
+        }
+    }
     /*
      * 启动本地媒体
      */
@@ -335,7 +365,7 @@ cordova.define("com.coocaaosapi", function(require, exports, module) {
     }
 
     /*
-     *  启动系统播放器
+     *  启动播放器
      *  needparse: 需要传递'true'|'false'，默认传递false
      */
     CoocaaOSApi.prototype.playOnlineMovie = function(url, name, needparse, success, error) {
@@ -801,21 +831,7 @@ cordova.define("com.coocaaosapi", function(require, exports, module) {
             'propertiesKey': data
         }]);
     }
-    /*
-	* 添加/删除全局广播。
-	*/
-	CoocaaOSApi.prototype.addGlobalBroadcastListener = function(action, listener)
-	{
-	    argscheck.checkArgs('sf','CoocaaOSApi.addGlobalBroadcastListener',arguments);
-	    brocaster.addGlobalEventListener( action,listener);
-	}
-	
-	CoocaaOSApi.prototype.removeGlobalBroadcastListener = function(action, listener)
-	{
-	    argscheck.checkArgs('sf','CoocaaOSApi.removeGlobalBroadcastListener',arguments);
-	    brocaster.removeGlobalEventListener( action, listener);
-	}
-	
+
     //通用监听
     CoocaaOSApi.prototype.addCommonListener = function(listener) {
         argscheck.checkArgs('f', 'CoocaaOSApi.addCommonListener', arguments);
@@ -1081,7 +1097,31 @@ cordova.define("com.broadcaster", function(require, exports, module) {
                     console.log("ERROR removeEventListener: " + err)
                 }, "broadcaster", "removeEventListener", [eventname]);
             }
-        }
+        },
+        addGlobalEventListener: function (eventname,f) {
+		    if (!(eventname in this._channels)) {
+		        var me = this;
+		        exec( function() {
+		          me._channels[eventname] = channel.create(eventname);
+		          me._channels[eventname].subscribe(f);
+		        }, function(err)  {
+		          console.log( "ERROR addGlobalEventListener: " + err)
+		        }, "broadcaster", "addGlobalEventListener", [ eventname ]);
+		    }
+		    else {
+		      this._channels[eventname].subscribe(f);
+		    }
+		 },
+		 removeGlobalEventListener: function(eventname, f) {
+		    if (eventname in this._channels) {
+		       var me = this;
+		       exec( function() {
+		         me._channels[eventname].unsubscribe(f);
+		       }, function(err)  {
+		         console.log( "ERROR removeGlobalEventListener: " + err)
+		       }, "broadcaster", "removeGlobalEventListener", [ eventname ]);
+		    }
+		 }
 
     };
 
